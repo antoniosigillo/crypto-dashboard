@@ -47,7 +47,7 @@ export default function CoinList() {
     };
     
     return (
-        <section className="dropdown col-12 col-md-6 col-lg-3" ref={rootRef} aria-label="Markets">
+        <section className="dropdown col-12 col-md-6 col-lg-4" ref={rootRef} aria-label="Markets">
             <button
                 type="button"
                 className="btn btn-lg btn-light dropdown-toggle w-100 d-flex align-items-center gap-2 text-start"
