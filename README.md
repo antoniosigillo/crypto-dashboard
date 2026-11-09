@@ -4,11 +4,11 @@ A responsive web app to follow real-time crypto prices, analyse the last 24 hour
 practise with **simulated** trades. No real money, no backend database: the portfolio lives in the browser
 (Redux state) and resets on page reload.
 
-**Stack:** Next.js 15 (App Router) · React 19 (hooks) · Redux Toolkit · Recharts · Bootstrap 5 · Jest + React Testing Library · CoinGecko API
+**Stack:** Next.js 15 (App Router) · React 19 (hooks) · Redux Toolkit · Recharts · Bootstrap 5 · Jest + React Testing Library · CoinGecko API · Docker
 
 ## Features
 
-- **Coin selector** with live price and 24h change, plus a search box (debounced, 300 ms).
+- **Coin selector**: a dropdown with the live price and 24h change of each coin, plus a search box (debounced, 300 ms).
 - **24h price chart** (line + soft area) for the selected coin (BTC, ETH, SOL, XRP, ADA, DOGE), with a "Prev close" reference line (price 24h ago) and a tag for the latest price.
 - **Mock trading**: the "Trade" button opens a dialog with linked EUR / coin inputs and Buy / Sell buttons, with validation (amount > 0, enough cash, enough coins). Portfolio updates instantly.
 - **Portfolio**: cash, crypto value, total value, holdings with average buy price and profit/loss (€ and %), and full transaction history. You start with 10,000 € of virtual cash.
@@ -17,6 +17,10 @@ practise with **simulated** trades. No real money, no backend database: the port
 - **Performance**: lazy-loaded chart (`next/dynamic`), debounced search, memoized selectors, server-side cache.
 
 ## Getting started
+
+You can run the app locally with Node.js or with Docker. No API key or environment variable is needed in either case.
+
+### Run locally
 
 Requirements: Node.js 18.18+ (tested with Node 22) and npm.
 
@@ -30,11 +34,39 @@ Other commands:
 ```bash
 npm test               # unit tests
 npm run test:coverage  # tests + coverage report (open coverage/lcov-report/index.html)
-npm run build    # production build
-npm start        # run the production build
+npm run build          # production build
+npm start              # run the production build
 ```
 
-No API key or environment variable is needed.
+### Run with Docker
+
+Requirements: Docker.
+
+Build the image:
+
+```bash
+docker build -t crypto-dashboard .
+```
+
+Run the container and open http://localhost:3000:
+
+```bash
+docker run --rm -p 3000:3000 crypto-dashboard
+```
+
+To run it in the background and stop it later:
+
+```bash
+docker run -d --name crypto-dashboard -p 3000:3000 crypto-dashboard
+docker stop crypto-dashboard && docker rm crypto-dashboard
+```
+
+To use another port on your machine, change the first number (for example `-p 8080:3000` serves the app on http://localhost:8080).
+
+Notes:
+
+- The build needs internet access, because the Open Sans font is downloaded from Google Fonts during `next build`.
+- The container needs internet access at runtime to reach the CoinGecko API.
 
 ## Design decisions
 
@@ -44,8 +76,9 @@ No API key or environment variable is needed.
 - **Redux Toolkit** keeps two small slices: `market` (server data) and `portfolio` (user data).
 - **Profit/loss**: per position `current value - amount paid`; total `cash + holdings value - 10,000 €`.
   Selling keeps the average buy price of what is left.
-- **Kept simple on purpose**: the project uses JavaScript to keep development lightweight. 
+- **Kept simple on purpose**: the project uses JavaScript to keep development lightweight.
   Since it is a small prototype with no user accounts or persistent data, it does not need a database or authentication.
+- **Docker** packages the production build, so the app runs the same way on any machine without installing Node.js.
 
 ## Notes
 
