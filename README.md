@@ -9,7 +9,7 @@ practise with **simulated** trades. No real money, no backend database: the port
 ## Features
 
 - **Coin selector**: a dropdown with the live price and 24h change of each coin, plus a search box (debounced, 300 ms).
-- **24h price chart** (line + soft area) for the selected coin (BTC, ETH, SOL, XRP, ADA, DOGE), with a "Prev close" reference line (price 24h ago) and a tag for the latest price.
+- **24h price chart** (line + soft area) for the selected coin (BTC, ETH, SOL, XRP, ADA, DOGE, USDT), with a "Prev close" reference line (price 24h ago) and a tag for the latest price.
 - **Mock trading**: the "Trade" button opens a dialog with linked EUR / coin inputs and Buy / Sell buttons, with validation (amount > 0, enough cash, enough coins). Portfolio updates instantly.
 - **Portfolio**: cash, crypto value, total value, holdings with average buy price and profit/loss (€ and %), and full transaction history. You start with 10,000 € of virtual cash.
 - **Real-time updates**: prices refresh every 10 s, the chart every 60 s (paused while the tab is hidden).
