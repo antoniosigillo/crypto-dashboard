@@ -3,3 +3,9 @@ node_modules
 coverage
 .git
 .gitignore
+.idea
+__tests__
+__mocks__
+test-utils
+Dockerfile
+.dockerignore
